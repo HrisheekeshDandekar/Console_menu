@@ -26,12 +26,15 @@
 #define DOUBLE_HORIZONTAL 205
 #define DOUBLE_VERTICAL 186
 
-
-int display_menu(struct menu_contents menu);
-int horizontal_padding_values(int largest_length);
-int print_the_frame(struct menu_contents menu, int title_len, int item1_len, int price1_len, int item2_len, int price2_len, int largest_length, int horizontal_padd_size);
-int console_menu(struct item_contents item1, struct item_contents item2, struct item_contents item3, struct item_contents item4, struct item_contents item5,
+//int display_menu(struct menu_contents menu);
+//int horizontal_padding_values(int largest_length);
+//int print_the_frame(struct menu_contents menu, int title_len, int item1_len, int price1_len, int item2_len, int price2_len, int largest_length, int horizontal_padd_size);
+int title_printing(struct menu_contents menu, int largest_length);
+int item_display_format(struct item_contents item, int item_full_length, int largest_length);
+int console_menu(struct menu_contents menu, struct item_contents item1, struct item_contents item2, struct item_contents item3, struct item_contents item4, struct item_contents item5,
 	struct item_contents item6, struct item_contents item7, struct item_contents item8, struct item_contents item9, struct item_contents item10);
+
+
 
 struct menu_contents
 {
@@ -74,7 +77,7 @@ int main()
 	struct menu_contents menu =               //Format{Title,Item1,Item2,}
 	{
 		//Normal output
-		"FINAF Pizzeria"/*,"Margaretta Double Cheese with Cheese Burst","Rs.225/-","BlueBerry Cheese Cake","Rs.125/-"*/
+		"FINAF Pizzeria abra ka dabra gili gili chuuuu"/*,"Margaretta Double Cheese with Cheese Burst","Rs.225/-","BlueBerry Cheese Cake","Rs.125/-"*/
 		// Max values to fit the length of console
 		//"a","a","a","a","aaaaaa321321321aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 		//Vales exceeding the max array sixe
@@ -85,11 +88,12 @@ int main()
 
 	struct item_contents item1=
 	{
-		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs. 27,849"
+		"Ryzen5 5600x","Clock Rate3700 -  4600 MHz","65watt","Rs. 27,849"
 	};
 	struct item_contents item2 =
 	{
-		"GTX 3060ti","OC Mode - 1740","600W","Rs. 35,900"
+		//"GTX 3060ti","OC Mode - 1740","600W","Rs. 35,900"
+		"","","",""
 	};
 	struct item_contents item3 =
 	{
@@ -97,23 +101,23 @@ int main()
 	};
 	struct item_contents item4 =
 	{
-		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+		"Ryzen5 5600x","Clock Rate 3700 - 4600 MHz","65watt","Rs/-27,849"
 	};
 	struct item_contents item5 =
 	{
-		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+		"Ryzen5 5600x","Clock Rate 3700 - 4600 MHz","65watt","Rs/-27,849"
 	};
 	struct item_contents item6 =
 	{
-		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+		"Ryzen5 5600x","Clock Rate 3700 - 4600 MHz","65watt","Rs/-27,849"
 	};
 	struct item_contents item7 =
 	{
-		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+		"Ryzen5 5600x","Clock Rate 3700 - 4600 MHz","65watt","Rs/-27,849"
 	};
 	struct item_contents item8 =
 	{
-		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+		"Ryzen5 5600x","Clock Rate 3700 - 4600 MHz","65watt","Rs/-27,849"
 	};
 	struct item_contents item9 =
 	{
@@ -123,7 +127,8 @@ int main()
 	{
 		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
 	};
-	display_menu(menu);		
+	//display_menu(menu);		
+	console_menu(menu, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10);
 	return 0;
 
 }
@@ -139,7 +144,9 @@ int console_menu(struct menu_contents menu ,struct item_contents item1, struct i
 
 	int item1_full_length, item2_full_length, item3_full_length, item4_full_length, item5_full_length, item6_full_length, item7_full_length, item8_full_length, item9_full_length, item10_full_length;
 
-	int largest_length, horizontal_padd_size;
+	int largest_length;// horizontal_padd_size;
+
+	int counter;
 
 	//To decide the dimentions of the box,string lengths are taken and compared
 
@@ -267,145 +274,270 @@ int console_menu(struct menu_contents menu ,struct item_contents item1, struct i
 		largest_length = item10_full_length;
 	}
 
-}
-
-int display_menu(struct menu_contents menu)
-{
-	int title_len, item1_len, price1_len, item2_len, price2_len, item1_full_length, item2_full_length, largest_length, horizontal_padd_size;
-
-	//Assigning string lengths to variables
-	title_len = strlen(menu.title);
-	/*item1_len = strlen(menu.item1);
-	price1_len = strlen(menu.price1);
-	item2_len = strlen(menu.item2);
-	price2_len = strlen(menu.price2);*/
-
-	//Combining lengths for item name and price
-	item1_full_length = item1_len + price1_len;
-	item2_full_length = item2_len + price2_len;
-
-	//Deciding which string is the longenst
-	if ((title_len >= item1_full_length) && (title_len >= item2_full_length))
-	{
-		largest_length = title_len;
-		//printf("\nLargest length is title");
-	}
-	else if ((item1_full_length >= title_len) && (item1_full_length >= item2_full_length))
-	{
-		largest_length = item1_full_length;
-		//printf("\nLargest length is item 1 full");
-	}
-	else
-	{
-		largest_length = item2_full_length;
-		//printf("\nLargest length is item2 full");
-	}
-	//printf("\nLength is  %d", largest_length);
-	if ((title_len > MAX_BUFFER) || (item1_len > MAX_BUFFER) || (price1_len > MAX_BUFFER) || (item2_len > MAX_BUFFER) || (price2_len > MAX_BUFFER))
+	//checking if any of the items have string length greater than maximum allowed
+	if ((title_len > MAX_BUFFER) || (item1_len > MAX_BUFFER) || (attribute1_1_len > MAX_BUFFER) || (attribute1_2_len > MAX_BUFFER) || (attribute_rightmost1_len > MAX_BUFFER) ||
+		(item2_len > MAX_BUFFER) || (attribute2_1_len > MAX_BUFFER) || (attribute2_2_len > MAX_BUFFER) || (attribute_rightmost2_len > MAX_BUFFER) || (item3_len > MAX_BUFFER) ||
+		(attribute3_1_len > MAX_BUFFER) || (attribute3_2_len > MAX_BUFFER) || (attribute_rightmost3_len > MAX_BUFFER) || (item4_len > MAX_BUFFER) || (attribute4_1_len > MAX_BUFFER) ||
+		(attribute4_2_len > MAX_BUFFER) || (attribute_rightmost4_len > MAX_BUFFER) || (item5_len > MAX_BUFFER) || (attribute5_1_len > MAX_BUFFER) || (attribute5_2_len > MAX_BUFFER) ||
+		(attribute_rightmost5_len > MAX_BUFFER) || (item6_len > MAX_BUFFER) || (attribute6_1_len > MAX_BUFFER) || (attribute6_2_len > MAX_BUFFER) || (attribute_rightmost6_len > MAX_BUFFER) ||
+		(item7_len > MAX_BUFFER) || (attribute7_1_len > MAX_BUFFER) || (attribute7_2_len > MAX_BUFFER) || (attribute_rightmost7_len > MAX_BUFFER) || (item8_len > MAX_BUFFER) ||
+		(attribute8_1_len > MAX_BUFFER) || (attribute8_2_len > MAX_BUFFER) || (attribute_rightmost8_len > MAX_BUFFER) || (item9_len > MAX_BUFFER) || (attribute9_1_len > MAX_BUFFER) ||
+		(attribute9_2_len > MAX_BUFFER) || (attribute_rightmost9_len > MAX_BUFFER) || (item10_len > MAX_BUFFER) || (attribute10_1_len > MAX_BUFFER) || (attribute10_2_len > MAX_BUFFER) ||
+		(attribute_rightmost10_len > MAX_BUFFER))
 	{
 		printf("The values trying to be entered in the arrays exceed the max value of 200\nTo make sure each character is displayed, ");
 		printf("Please make sure the length of charaters does not exceed 200 in any element");
-		printf("\n\n\n\n\n\n\n\n");
+		printf("\n\n\n");
 		exit();
 	}
-	if (largest_length > 113)						//Checking if user is okay with frames larger than the console
-	{
-		printf("The display_menu of the box to be displayed exceeds the Normal size of the console on Win10 16:9 screen.");
-		printf("\nIf you wish to continue, enter 0");
-		int error_accepted;
-		scanf_s("%d", &error_accepted);
-		if (error_accepted == 0)
-		{
-			horizontal_padd_size = horizontal_padding_values(largest_length);
-			print_the_frame(menu, title_len, item1_len, price1_len, item2_len, price2_len, largest_length, horizontal_padd_size);
-		}
-		else
-		{
-			exit();
-		}
-	}
 
-	horizontal_padd_size = horizontal_padding_values(largest_length);
+	//Starting to print the menu
 
-	print_the_frame(menu, title_len, item1_len, price1_len, item2_len, price2_len, largest_length, horizontal_padd_size);
-	return 0;
-}
-
-int horizontal_padding_values(int largest_length)
-{
-	//Horizontal length of the console is 120 characters
-	//Vertical length of the console is 30 characters
-
-	int doubleframe_horizontal_length, horizontal_padd_size, vertical_padd_size;
-
-	doubleframe_horizontal_length = largest_length + 6;
-	horizontal_padd_size = ((120 - doubleframe_horizontal_length) / 2);
-
-	//As the vertical length of table and console is fixed, we know the horizonal padding value is 8
-
-	return horizontal_padd_size;
-}
-int single_element_row(struct menu_contents menu, int title_len, int item1_len, int price1_len, int item2_len, int price2_len, int largest_length, int horizontal_padd_size)
-{
-	printf("%c", DOUBLE_VERTICAL);
-
-}
-//Block to print the Table
-int print_the_frame(struct menu_contents menu, int title_len, int item1_len, int price1_len, int item2_len, int price2_len, int largest_length, int horizontal_padd_size)
-{
-	int counter, title_padding;
-
-	title_padding = (largest_length - title_len) / 2;
-	/*printf("%d\n", largest_length);
-	printf("%d\n", title_len);
-	printf("%d\n", title_padding);*/
-	for (counter = 0; counter < 8; counter++) //Vertical Padding
-	{
-		printf("\n");
-	}
-	//Outer frame, upper line
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_LEFT_UPPER);
-	for (counter = 0; counter < largest_length + 4; counter++)
+	printf("%c", DOUBLE_LEFT_UPPER);											//Upper boundry of Double frame
+	for (counter = 0; counter < largest_length + 8; counter++)
 	{
 		printf("%c", DOUBLE_HORIZONTAL);
 	}
 	printf("%c\n", DOUBLE_RIGHT_UPPER);
-	//Upper line blank
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
+
+	title_printing(menu,largest_length);				//Printing Title
+
+	if (item1_full_length != 0)
 	{
-		printf(" ");
+		item_display_format(item1, item1_full_length, largest_length);
 	}
+	if (item2_full_length != 0)
+	{
+		item_display_format(item2, item2_full_length, largest_length);
+	}
+	if (item3_full_length != 0)
+	{
+		item_display_format(item3, item3_full_length, largest_length);
+	}
+	if (item4_full_length != 0)
+	{
+		item_display_format(item4, item4_full_length, largest_length);
+	}
+	if (item5_full_length != 0)
+	{
+		item_display_format(item5, item5_full_length, largest_length);
+	}
+	if (item6_full_length != 0)
+	{
+		item_display_format(item6, item6_full_length, largest_length);
+	}
+	if (item7_full_length != 0)
+	{
+		item_display_format(item7, item7_full_length, largest_length);
+	}
+	if (item8_full_length != 0)
+	{
+		item_display_format(item8, item8_full_length, largest_length);
+	}
+	if (item9_full_length != 0)
+	{
+		item_display_format(item9, item9_full_length, largest_length);
+	}
+	if (item10_full_length != 0)
+	{
+		item_display_format(item10, item10_full_length, largest_length);
+	}
+
+	printf("%c", DOUBLE_LEFT_LOWER);									//Lower boundry of double frame
+	for (counter = 0; counter < largest_length + 8; counter++)
+	{
+		printf("%c", DOUBLE_HORIZONTAL);
+	}
+	printf("%c\n", DOUBLE_RIGHT_LOWER);
+
+
+
+
+
+
+
+
+
+
+	return 0;
+}
+/*int item_display_format(int title_len,int item1_len, int attribute1_1_len, int attribute1_2_len, int attribute_rightmost1_len, int item2_len, int attribute2_1_len,
+	int attribute2_2_len, int attribute_rightmost2_len, int item3_len, int attribute3_1_len, int attribute3_2_len, int attribute_rightmost3_len,int item4_len, int attribute4_1_len, 
+	int attribute4_2_len,int attribute_rightmost4_len, int item5_len, int attribute5_1_len, int attribute5_2_len, int attribute_rightmost5_len, int item6_len, int attribute6_1_len, 
+	int attribute6_2_len, int attribute_rightmost6_len,int item7_len, int attribute7_1_len, int attribute7_2_len, int attribute_rightmost7_len, int item8_len, int attribute8_1_len, 
+	int attribute8_2_len, int attribute_rightmost8_len, int item9_len, int attribute9_1_len, int attribute9_2_len, int attribute_rightmost9_len,int item10_len, int attribute10_1_len, 
+	int attribute10_2_len, int attribute_rightmost10_len,
+	int item1_full_length, int item2_full_length, int item3_full_length, int item4_full_length, int item5_full_length, int item6_full_length, int item7_full_length, int item8_full_length, 
+	int item9_full_length, int item10_full_length,int largest_length,
+	struct menu_contents menu, struct item_contents item1, struct item_contents item2, struct item_contents item3, struct item_contents item4, struct item_contents item5,
+	struct item_contents item6, struct item_contents item7, struct item_contents item8, struct item_contents item9, struct item_contents item10)
+{
+	return 0;
+}*/
+int item_display_format(struct item_contents item, int item_full_length, int largest_length)
+{
+	int item_len = strlen(item.item);
+	int attribute1_len = strlen(item.attribute1);
+	int attribute2_len = strlen(item.attribute2);
+	int attribute_rightmost_len = strlen(item.attribute_rightmost);
+	int counter;
+
+																//LINE 1 (Upper parts of single borders)
 	printf("%c", DOUBLE_VERTICAL);
-	for (counter = 0; counter < largest_length + 4; counter++)
+
+
+	printf("%c", SINGLE_LEFT_UPPER);							//Start of item name single frame
+	for (counter = 0; counter < item_len; counter++)
 	{
-		printf(" ");
+		printf("%c", SINGLE_HORIZONTAL);
 	}
+	printf("%c", SINGLE_RIGHT_UPPER);
+
+
+	printf("%c", SINGLE_LEFT_UPPER);							//Start of attribute1 single frame
+	for (counter = 0; counter < attribute1_len; counter++)
+	{
+		printf("%c", SINGLE_HORIZONTAL);
+	}
+	printf("%c", SINGLE_RIGHT_UPPER);
+
+
+	printf("%c", SINGLE_LEFT_UPPER);							//Start of attribute2 single frame 
+	for (counter = 0; counter < attribute2_len; counter++)
+	{
+		printf("%c", SINGLE_HORIZONTAL);
+	}
+	printf("%c", SINGLE_RIGHT_UPPER);
+
+
+	if (item_full_length != largest_length)						//Padding betwwen right most value and attribute 2 in case if this is not the largest string
+	{
+		for (counter = 0; counter < largest_length - item_full_length; counter++)
+		{
+			printf(" ");
+		}
+	}
+
+
+
+	printf("%c", SINGLE_LEFT_UPPER);							//Start of rightmost attribute single frame 
+	for (counter = 0; counter < attribute_rightmost_len; counter++)
+	{
+		printf("%c", SINGLE_HORIZONTAL);
+	}
+	printf("%c", SINGLE_RIGHT_UPPER);
+
 	printf("%c\n", DOUBLE_VERTICAL);
-	//Start of title frame
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
+	
+																	//LINE 2 (Printing strings)
+
+	printf("%c", DOUBLE_VERTICAL);
+
+	printf("%c", SINGLE_VERTICAL);
+	printf("%s", item.item);		//Item name
+	printf("%c", SINGLE_VERTICAL);
+
+	printf("%c", SINGLE_VERTICAL);
+	printf("%s", item.attribute1);		//Attribute1
+	printf("%c", SINGLE_VERTICAL);
+
+	printf("%c", SINGLE_VERTICAL);
+	printf("%s", item.attribute2);		//Attribute2
+	printf("%c", SINGLE_VERTICAL);
+
+	if (item_full_length != largest_length)						//Padding betwwen right most value and attribute 2 in case if this is not the largest string
+	{
+		for (counter = 0; counter < largest_length - item_full_length; counter++)
+		{
+			printf(" ");
+		}
+	}
+
+	printf("%c", SINGLE_VERTICAL);
+	printf("%s", item.attribute_rightmost);		//Attribute_rightmost
+	printf("%c", SINGLE_VERTICAL);
+
+	printf("%c\n", DOUBLE_VERTICAL);
+
+																//LINE 3 (Closing of all the single borders)
+
+	printf("%c", DOUBLE_VERTICAL);
+
+
+	printf("%c", SINGLE_LEFT_LOWER);							//End of item name single frame
+	for (counter = 0; counter < item_len; counter++)
+	{
+		printf("%c", SINGLE_HORIZONTAL);
+	}
+	printf("%c", SINGLE_RIGHT_LOWER);
+
+
+	printf("%c", SINGLE_LEFT_LOWER);							//End of attribute1 single frame
+	for (counter = 0; counter < attribute1_len; counter++)
+	{
+		printf("%c", SINGLE_HORIZONTAL);
+	}
+	printf("%c", SINGLE_RIGHT_LOWER);
+
+
+	printf("%c", SINGLE_LEFT_LOWER);							//End of attribute2 single frame 
+	for (counter = 0; counter < attribute2_len; counter++)
+	{
+		printf("%c", SINGLE_HORIZONTAL);
+	}
+	printf("%c", SINGLE_RIGHT_LOWER);
+
+
+	if (item_full_length != largest_length)						//Padding betwwen right most value and attribute 2 in case if this is not the largest string
+	{
+		for (counter = 0; counter < largest_length - item_full_length; counter++)
+		{
+			printf(" ");
+		}
+	}
+
+
+
+	printf("%c", SINGLE_LEFT_LOWER);							//End of rightmost attribute single frame 
+	for (counter = 0; counter < attribute_rightmost_len; counter++)
+	{
+		printf("%c", SINGLE_HORIZONTAL);
+	}
+	printf("%c", SINGLE_RIGHT_LOWER);
+
+	printf("%c\n", DOUBLE_VERTICAL);
+
+}
+int title_printing(struct menu_contents menu, int largest_length)
+{
+	int counter, title_padding, title_len;
+
+	title_len = strlen(menu.title);
+	title_padding = ((largest_length+4) - title_len) / 2;
+
+
+	printf("%c", DOUBLE_VERTICAL);									//Blank Line
+	for (counter = 0; counter < (largest_length + 8); counter++)
 	{
 		printf(" ");
 	}
 	printf("%c", DOUBLE_VERTICAL);
+	printf("\n");
+
+
+	printf("%c", DOUBLE_VERTICAL);									//Upper start of Title frame  (LINE 1)
 	printf(" ");
 	printf("%c", DOUBLE_LEFT_UPPER);
-	for (counter = 0; counter < largest_length; counter++)
+	for (counter = 0; counter < (largest_length+4); counter++)
 	{
 		printf("%c", SINGLE_HORIZONTAL);
 	}
 	printf("%c", DOUBLE_RIGHT_UPPER);
 	printf(" ");
 	printf("%c\n", DOUBLE_VERTICAL);
-	//Print for title frame
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_VERTICAL);
+
+
+	printf("%c", DOUBLE_VERTICAL);                                  //Printing title (LINE 2)
 	printf(" ");
 	printf("%c", SINGLE_VERTICAL);
 	for (counter = 0; counter < title_padding; counter++)
@@ -418,201 +550,38 @@ int print_the_frame(struct menu_contents menu, int title_len, int item1_len, int
 		printf(" ");
 	}
 	//Making sure padding is correct (Total length of the line has to be padded with space. If title.len is odd, one space is given less as lower bound is taken during divition)
-	if ((title_len % 2) != (largest_length % 2))
+	if ((title_len % 2) != ((largest_length+4) % 2))
 	{
 		printf(" ");
 	}
 	printf("%c", SINGLE_VERTICAL);
 	printf(" ");
 	printf("%c\n", DOUBLE_VERTICAL);
-	//End of title frame
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_VERTICAL);
+	
+
+	printf("%c", DOUBLE_VERTICAL);									//Lower Start of  Title frame (LINE 3)
 	printf(" ");
 	printf("%c", DOUBLE_LEFT_LOWER);
-	for (counter = 0; counter < largest_length; counter++)
+	for (counter = 0; counter < (largest_length+4); counter++)
 	{
 		printf("%c", SINGLE_HORIZONTAL);
 	}
 	printf("%c", DOUBLE_RIGHT_LOWER);
 	printf(" ");
 	printf("%c\n", DOUBLE_VERTICAL);
-	//Another blank line
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_VERTICAL);
-	for (counter = 0; counter < largest_length + 4; counter++)
-	{
-		printf(" ");
-	}
-	printf("%c\n", DOUBLE_VERTICAL);
-	//Item1 frame start
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_VERTICAL);
-	printf("%c", SINGLE_LEFT_UPPER);
-	for (counter = 0; counter < item1_len; counter++)
-	{
-		printf("%c", SINGLE_HORIZONTAL);
-	}
-	printf("%c", SINGLE_RIGHT_UPPER);
-	//start for price 1 frame
-	printf("%c", SINGLE_LEFT_UPPER);
-	for (counter = 0; counter < price1_len; counter++)
-	{
-		printf("%c", SINGLE_HORIZONTAL);
-	}
-	printf("%c", SINGLE_RIGHT_UPPER);
-	if ((item1_len + price1_len) != (largest_length))  //Necessary padding at the end of both the frames to compensate for the diff in string lengths
-	{
-		for (counter = 0; counter < (largest_length - (item1_len + price1_len)); counter++)
-		{
-			printf(" ");
-		}
-	}
-	printf("%c\n", DOUBLE_VERTICAL);
-	//Printing item1, price1
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_VERTICAL);
-	printf("%c", SINGLE_VERTICAL);
-	printf("%s", menu.item1);
-	printf("%c", SINGLE_VERTICAL);
-	printf("%c", SINGLE_VERTICAL);
-	printf("%s", menu.price1);
-	printf("%c", SINGLE_VERTICAL);
-	if ((item1_len + price1_len) != (largest_length))  //Necessary padding at the end of both the frames to compensate for the diff in string lengths
-	{
-		for (counter = 0; counter < (largest_length - (item1_len + price1_len)); counter++)
-		{
-			printf(" ");
-		}
-	}
-	printf("%c\n", DOUBLE_VERTICAL);
-	//Closing the item 1, price1 frames
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_VERTICAL);
-	printf("%c", SINGLE_LEFT_LOWER);
-	for (counter = 0; counter < item1_len; counter++)
-	{
-		printf("%c", SINGLE_HORIZONTAL);
-	}
-	printf("%c", SINGLE_RIGHT_LOWER);
-	printf("%c", SINGLE_LEFT_LOWER);
-	for (counter = 0; counter < price1_len; counter++)
-	{
-		printf("%c", SINGLE_HORIZONTAL);
-	}
-	printf("%c", SINGLE_RIGHT_LOWER);
-	if ((item1_len + price1_len) != (largest_length))  //Necessary padding at the end of both the frames to compensate for the diff in string lengths
-	{
-		for (counter = 0; counter < (largest_length - (item1_len + price1_len)); counter++)
-		{
-			printf(" ");
-		}
-	}
-	printf("%c\n", DOUBLE_VERTICAL);
 
-	//Item2 frame start
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
+	printf("%c", DOUBLE_VERTICAL);									//Blank Line
+	for (counter = 0; counter < (largest_length + 8); counter++)
 	{
 		printf(" ");
 	}
 	printf("%c", DOUBLE_VERTICAL);
-	printf("%c", SINGLE_LEFT_UPPER);
-	for (counter = 0; counter < item2_len; counter++)
-	{
-		printf("%c", SINGLE_HORIZONTAL);
-	}
-	printf("%c", SINGLE_RIGHT_UPPER);
-	//start for price 2 frame
-	printf("%c", SINGLE_LEFT_UPPER);
-	for (counter = 0; counter < price2_len; counter++)
-	{
-		printf("%c", SINGLE_HORIZONTAL);
-	}
-	//starting frames for item2,price2
-	printf("%c", SINGLE_RIGHT_UPPER);
-	if ((item2_len + price2_len) != (largest_length))  //Necessary padding at the end of both the frames to compensate for the diff in string lengths
-	{
-		for (counter = 0; counter < (largest_length - (item2_len + price2_len)); counter++)
-		{
-			printf(" ");
-		}
-	}
-	printf("%c\n", DOUBLE_VERTICAL);
-	//Printing item1, price1
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_VERTICAL);
-	printf("%c", SINGLE_VERTICAL);
-	printf("%s", menu.item2);
-	printf("%c", SINGLE_VERTICAL);
-	printf("%c", SINGLE_VERTICAL);
-	printf("%s", menu.price2);
-	printf("%c", SINGLE_VERTICAL);
-	if ((item2_len + price2_len) != (largest_length))  //Necessary padding at the end of both the frames to compensate for the diff in string lengths
-	{
-		for (counter = 0; counter < (largest_length - (item2_len + price2_len)); counter++)
-		{
-			printf(" ");
-		}
-	}
-	printf("%c\n", DOUBLE_VERTICAL);
-	//Closing the item 2, price2 frames
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_VERTICAL);
-	printf("%c", SINGLE_LEFT_LOWER);
-	for (counter = 0; counter < item2_len; counter++)
-	{
-		printf("%c", SINGLE_HORIZONTAL);
-	}
-	printf("%c", SINGLE_RIGHT_LOWER);
-	printf("%c", SINGLE_LEFT_LOWER);
-	for (counter = 0; counter < price2_len; counter++)
-	{
-		printf("%c", SINGLE_HORIZONTAL);
-	}
-	printf("%c", SINGLE_RIGHT_LOWER);
-	if ((item2_len + price2_len) != (largest_length))  //Necessary padding at the end of both the frames to compensate for the diff in string lengths
-	{
-		for (counter = 0; counter < (largest_length - (item2_len + price2_len)); counter++)
-		{
-			printf(" ");
-		}
-	}
-	printf("%c\n", DOUBLE_VERTICAL);
-	//Closing the main double frame
-	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
-	{
-		printf(" ");
-	}
-	printf("%c", DOUBLE_LEFT_LOWER);
-	for (counter = 0; counter < largest_length + 4; counter++)
-	{
-		printf("%c", DOUBLE_HORIZONTAL);
-	}
-	printf("%c\n", DOUBLE_RIGHT_LOWER);
-	//Vertical Padding
-	for (counter = 0; counter < 8; counter++)
-	{
-		printf("\n");
-	}
+	printf("\n");
+
+
+	return 0;
 }
+
+
+
+
