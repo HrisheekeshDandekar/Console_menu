@@ -30,14 +30,27 @@
 int display_menu(struct menu_contents menu);
 int horizontal_padding_values(int largest_length);
 int print_the_frame(struct menu_contents menu, int title_len, int item1_len, int price1_len, int item2_len, int price2_len, int largest_length, int horizontal_padd_size);
+int console_menu(struct item_contents item1, struct item_contents item2, struct item_contents item3, struct item_contents item4, struct item_contents item5,
+	struct item_contents item6, struct item_contents item7, struct item_contents item8, struct item_contents item9, struct item_contents item10);
 
 struct menu_contents
 {
 	char title[MAX_BUFFER];
-	char item1[MAX_BUFFER];
+	/*char item1[MAX_BUFFER];
 	char price1[MAX_BUFFER];
 	char item2[MAX_BUFFER];
-	char price2[MAX_BUFFER];
+	char price2[MAX_BUFFER];*/
+};
+struct item_contents
+{
+	char item[MAX_BUFFER];
+	char attribute1[MAX_BUFFER];
+	char attribute2[MAX_BUFFER];
+	char attribute_rightmost[MAX_BUFFER];
+};
+struct all_items
+{
+	struct item_contents;
 };
 
 int main()
@@ -58,10 +71,10 @@ int main()
 	printf("\n%c",DOUBLE_VERTICAL );
 	*/
 
-	struct menu_contents menu =
+	struct menu_contents menu =               //Format{Title,Item1,Item2,}
 	{
 		//Normal output
-		"FINAF Pizzeria","Margaretta Double Cheese with Cheese Burst","Rs.225/-","BlueBerry Cheese Cake","Rs.125/-"
+		"FINAF Pizzeria"/*,"Margaretta Double Cheese with Cheese Burst","Rs.225/-","BlueBerry Cheese Cake","Rs.125/-"*/
 		// Max values to fit the length of console
 		//"a","a","a","a","aaaaaa321321321aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 		//Vales exceeding the max array sixe
@@ -69,8 +82,190 @@ int main()
 
 
 	};
-	display_menu(menu);
+
+	struct item_contents item1=
+	{
+		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs. 27,849"
+	};
+	struct item_contents item2 =
+	{
+		"GTX 3060ti","OC Mode - 1740","600W","Rs. 35,900"
+	};
+	struct item_contents item3 =
+	{
+		"AMD B550","PCIe 4.0/3.0 x4 M.2","Q-Flash Plus","Rs. 9,550"
+	};
+	struct item_contents item4 =
+	{
+		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+	};
+	struct item_contents item5 =
+	{
+		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+	};
+	struct item_contents item6 =
+	{
+		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+	};
+	struct item_contents item7 =
+	{
+		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+	};
+	struct item_contents item8 =
+	{
+		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+	};
+	struct item_contents item9 =
+	{
+		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+	};
+	struct item_contents item10 =
+	{
+		"Ryzen5 5600x","Clock Rate	3700 - 4600 MHz","65watt","Rs/-27,849"
+	};
+	display_menu(menu);		
 	return 0;
+
+}
+
+int console_menu(struct menu_contents menu ,struct item_contents item1, struct item_contents item2, struct item_contents item3, struct item_contents item4, struct item_contents item5,
+	struct item_contents item6, struct item_contents item7, struct item_contents item8, struct item_contents item9, struct item_contents item10)
+{
+	int title_len;
+	int item1_len, attribute1_1_len, attribute1_2_len, attribute_rightmost1_len, item2_len, attribute2_1_len, attribute2_2_len, attribute_rightmost2_len, item3_len, attribute3_1_len, attribute3_2_len, attribute_rightmost3_len;
+	int item4_len, attribute4_1_len, attribute4_2_len, attribute_rightmost4_len, item5_len, attribute5_1_len, attribute5_2_len, attribute_rightmost5_len, item6_len, attribute6_1_len, attribute6_2_len, attribute_rightmost6_len;
+	int item7_len, attribute7_1_len, attribute7_2_len, attribute_rightmost7_len, item8_len, attribute8_1_len, attribute8_2_len, attribute_rightmost8_len, item9_len, attribute9_1_len, attribute9_2_len, attribute_rightmost9_len;
+	int item10_len, attribute10_1_len, attribute10_2_len, attribute_rightmost10_len;
+
+	int item1_full_length, item2_full_length, item3_full_length, item4_full_length, item5_full_length, item6_full_length, item7_full_length, item8_full_length, item9_full_length, item10_full_length;
+
+	int largest_length, horizontal_padd_size;
+
+	//To decide the dimentions of the box,string lengths are taken and compared
+
+	title_len = strlen(menu.title);
+
+	item1_len = strlen(item1.item);
+	attribute1_1_len = strlen(item1.attribute1);
+	attribute1_2_len = strlen(item1.attribute2);
+	attribute_rightmost1_len = strlen(item1.attribute_rightmost);
+
+	item1_full_length = item1_len + attribute1_1_len + attribute1_2_len + attribute_rightmost1_len;
+
+
+	item2_len = strlen(item2.item);
+	attribute2_1_len = strlen(item2.attribute1);
+	attribute2_2_len = strlen(item2.attribute2);
+	attribute_rightmost2_len = strlen(item2.attribute_rightmost);
+
+	item2_full_length = item2_len + attribute2_1_len + attribute2_2_len + attribute_rightmost2_len;
+
+
+	item3_len = strlen(item3.item);
+	attribute3_1_len = strlen(item3.attribute1);
+	attribute3_2_len = strlen(item3.attribute2);
+	attribute_rightmost3_len = strlen(item3.attribute_rightmost);
+
+	item3_full_length = item3_len + attribute3_1_len + attribute3_2_len + attribute_rightmost3_len;
+
+
+	item4_len = strlen(item5.item);
+	attribute4_1_len = strlen(item4.attribute1);
+	attribute4_2_len = strlen(item4.attribute2);
+	attribute_rightmost4_len = strlen(item4.attribute_rightmost);
+
+	item4_full_length = item4_len + attribute4_1_len + attribute4_2_len + attribute_rightmost4_len;
+
+
+	item5_len = strlen(item5.item);
+	attribute5_1_len = strlen(item5.attribute1);
+	attribute5_2_len = strlen(item5.attribute2);
+	attribute_rightmost5_len = strlen(item5.attribute_rightmost);
+
+	item5_full_length = item5_len + attribute5_1_len + attribute5_2_len + attribute_rightmost5_len;
+
+
+	item6_len = strlen(item6.item);
+	attribute6_1_len = strlen(item6.attribute1);
+	attribute6_2_len = strlen(item6.attribute2);
+	attribute_rightmost6_len = strlen(item6.attribute_rightmost);
+
+	item6_full_length = item6_len + attribute6_1_len + attribute6_2_len + attribute_rightmost6_len;
+
+
+	item7_len = strlen(item7.item);
+	attribute7_1_len = strlen(item7.attribute1);
+	attribute7_2_len = strlen(item7.attribute2);
+	attribute_rightmost7_len = strlen(item7.attribute_rightmost);
+
+	item7_full_length = item7_len + attribute7_1_len + attribute7_2_len + attribute_rightmost7_len;
+
+
+	item8_len = strlen(item8.item);
+	attribute8_1_len = strlen(item8.attribute1);
+	attribute8_2_len = strlen(item8.attribute2);
+	attribute_rightmost8_len = strlen(item8.attribute_rightmost);
+
+	item8_full_length = item8_len + attribute8_1_len + attribute8_2_len + attribute_rightmost8_len;
+
+
+	item9_len = strlen(item9.item);
+	attribute9_1_len = strlen(item9.attribute1);
+	attribute9_2_len = strlen(item9.attribute2);
+	attribute_rightmost9_len = strlen(item9.attribute_rightmost);
+
+	item9_full_length = item9_len + attribute9_1_len + attribute9_2_len + attribute_rightmost9_len;
+
+
+	item10_len = strlen(item10.item);
+	attribute10_1_len = strlen(item10.attribute1);
+	attribute10_2_len = strlen(item10.attribute2);
+	attribute_rightmost10_len = strlen(item10.attribute_rightmost);
+
+	item10_full_length = item10_len + attribute10_1_len + attribute10_2_len + attribute_rightmost10_len;
+
+	// Decideing the largest string length of the 10 items.
+	largest_length = title_len;
+	if (largest_length <= item1_full_length)
+	{
+		largest_length = item1_full_length;
+	}
+	if (largest_length <= item2_full_length)
+	{
+		largest_length = item2_full_length;
+	}
+	if (largest_length <= item3_full_length)
+	{
+		largest_length = item3_full_length;
+	}
+	if (largest_length <= item4_full_length)
+	{
+		largest_length = item4_full_length;
+	}
+	if (largest_length <= item5_full_length)
+	{
+		largest_length = item5_full_length;
+	}
+	if (largest_length <= item6_full_length)
+	{
+		largest_length = item6_full_length;
+	}
+	if (largest_length <= item7_full_length)
+	{
+		largest_length = item7_full_length;
+	}
+	if (largest_length <= item8_full_length)
+	{
+		largest_length = item8_full_length;
+	}
+	if (largest_length <= item9_full_length)
+	{
+		largest_length = item9_full_length;
+	}
+	if (largest_length <= item10_full_length)
+	{
+		largest_length = item10_full_length;
+	}
 
 }
 
@@ -80,10 +275,10 @@ int display_menu(struct menu_contents menu)
 
 	//Assigning string lengths to variables
 	title_len = strlen(menu.title);
-	item1_len = strlen(menu.item1);
+	/*item1_len = strlen(menu.item1);
 	price1_len = strlen(menu.price1);
 	item2_len = strlen(menu.item2);
-	price2_len = strlen(menu.price2);
+	price2_len = strlen(menu.price2);*/
 
 	//Combining lengths for item name and price
 	item1_full_length = item1_len + price1_len;
@@ -133,7 +328,7 @@ int display_menu(struct menu_contents menu)
 	horizontal_padd_size = horizontal_padding_values(largest_length);
 
 	print_the_frame(menu, title_len, item1_len, price1_len, item2_len, price2_len, largest_length, horizontal_padd_size);
-
+	return 0;
 }
 
 int horizontal_padding_values(int largest_length)
@@ -149,6 +344,11 @@ int horizontal_padding_values(int largest_length)
 	//As the vertical length of table and console is fixed, we know the horizonal padding value is 8
 
 	return horizontal_padd_size;
+}
+int single_element_row(struct menu_contents menu, int title_len, int item1_len, int price1_len, int item2_len, int price2_len, int largest_length, int horizontal_padd_size)
+{
+	printf("%c", DOUBLE_VERTICAL);
+
 }
 //Block to print the Table
 int print_the_frame(struct menu_contents menu, int title_len, int item1_len, int price1_len, int item2_len, int price2_len, int largest_length, int horizontal_padd_size)
