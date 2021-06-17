@@ -29,6 +29,7 @@
 //int display_menu(struct menu_contents menu);
 //int horizontal_padding_values(int largest_length);
 //int print_the_frame(struct menu_contents menu, int title_len, int item1_len, int price1_len, int item2_len, int price2_len, int largest_length, int horizontal_padd_size);
+int horizontal_padding(int largest_length);
 int title_printing(struct menu_contents menu, int largest_length);
 int item_display_format(struct item_contents item, int item_full_length, int largest_length);
 int console_menu(struct menu_contents menu, struct item_contents item1, struct item_contents item2, struct item_contents item3, struct item_contents item4, struct item_contents item5,
@@ -293,6 +294,7 @@ int console_menu(struct menu_contents menu ,struct item_contents item1, struct i
 
 	//Starting to print the menu
 
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_LEFT_UPPER);											//Upper boundry of Double frame
 	for (counter = 0; counter < largest_length + 8; counter++)
 	{
@@ -342,7 +344,7 @@ int console_menu(struct menu_contents menu ,struct item_contents item1, struct i
 	{
 		item_display_format(item10, item10_full_length, largest_length);
 	}
-
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_LEFT_LOWER);									//Lower boundry of double frame
 	for (counter = 0; counter < largest_length + 8; counter++)
 	{
@@ -374,6 +376,23 @@ int console_menu(struct menu_contents menu ,struct item_contents item1, struct i
 {
 	return 0;
 }*/
+int horizontal_padding(int largest_length)
+{
+	//Horizontal length of the console is 120 characters
+	//Vertical length of the console is 30 characters
+
+	int doubleframe_horizontal_length, horizontal_padd_size, vertical_padd_size,counter;
+
+	doubleframe_horizontal_length = largest_length + 8;
+	horizontal_padd_size = ((120 - doubleframe_horizontal_length) / 2);
+
+
+	for (counter = 0; counter < horizontal_padd_size; counter++)//Horizontal Padding for each line
+	{
+		printf(" ");
+	}
+}
+
 int item_display_format(struct item_contents item, int item_full_length, int largest_length)
 {
 	int item_len = strlen(item.item);
@@ -382,6 +401,7 @@ int item_display_format(struct item_contents item, int item_full_length, int lar
 	int attribute_rightmost_len = strlen(item.attribute_rightmost);
 	int counter;
 
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 																//LINE 1 (Upper parts of single borders)
 	printf("%c", DOUBLE_VERTICAL);
 
@@ -430,7 +450,7 @@ int item_display_format(struct item_contents item, int item_full_length, int lar
 	printf("%c\n", DOUBLE_VERTICAL);
 	
 																	//LINE 2 (Printing strings)
-
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_VERTICAL);
 
 	printf("%c", SINGLE_VERTICAL);
@@ -460,7 +480,7 @@ int item_display_format(struct item_contents item, int item_full_length, int lar
 	printf("%c\n", DOUBLE_VERTICAL);
 
 																//LINE 3 (Closing of all the single borders)
-
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_VERTICAL);
 
 
@@ -508,6 +528,7 @@ int item_display_format(struct item_contents item, int item_full_length, int lar
 	printf("%c\n", DOUBLE_VERTICAL);
 
 }
+
 int title_printing(struct menu_contents menu, int largest_length)
 {
 	int counter, title_padding, title_len;
@@ -515,7 +536,7 @@ int title_printing(struct menu_contents menu, int largest_length)
 	title_len = strlen(menu.title);
 	title_padding = ((largest_length+4) - title_len) / 2;
 
-
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_VERTICAL);									//Blank Line
 	for (counter = 0; counter < (largest_length + 8); counter++)
 	{
@@ -525,6 +546,7 @@ int title_printing(struct menu_contents menu, int largest_length)
 	printf("\n");
 
 
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_VERTICAL);									//Upper start of Title frame  (LINE 1)
 	printf(" ");
 	printf("%c", DOUBLE_LEFT_UPPER);
@@ -537,6 +559,7 @@ int title_printing(struct menu_contents menu, int largest_length)
 	printf("%c\n", DOUBLE_VERTICAL);
 
 
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_VERTICAL);                                  //Printing title (LINE 2)
 	printf(" ");
 	printf("%c", SINGLE_VERTICAL);
@@ -559,6 +582,7 @@ int title_printing(struct menu_contents menu, int largest_length)
 	printf("%c\n", DOUBLE_VERTICAL);
 	
 
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_VERTICAL);									//Lower Start of  Title frame (LINE 3)
 	printf(" ");
 	printf("%c", DOUBLE_LEFT_LOWER);
@@ -570,6 +594,7 @@ int title_printing(struct menu_contents menu, int largest_length)
 	printf(" ");
 	printf("%c\n", DOUBLE_VERTICAL);
 
+	horizontal_padding(largest_length);   //Padding to get the table at the centre
 	printf("%c", DOUBLE_VERTICAL);									//Blank Line
 	for (counter = 0; counter < (largest_length + 8); counter++)
 	{
@@ -577,7 +602,6 @@ int title_printing(struct menu_contents menu, int largest_length)
 	}
 	printf("%c", DOUBLE_VERTICAL);
 	printf("\n");
-
 
 	return 0;
 }
